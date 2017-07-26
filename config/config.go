@@ -2,7 +2,7 @@ package config
 
 // db config
 import (
-	"fmt"
+	// "fmt"
 	_ "github.com/joho/godotenv/autoload"
 	"os"
 )
