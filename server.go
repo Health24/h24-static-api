@@ -31,15 +31,15 @@ func main() {
 	}))
 
 	// Public routes
-	publicRoutes := e.Group("")
+	// publicRoutes := e.Group("")
 	// publicRoutes.POST("/login", controllers.Login)
 
 	// Restricted routes
-	// apiRoutes := e.Group("/api")
+	apiRoutes := e.Group("/api")
 	// apiRoutes.Use(middleware.JWT(AppSecret))
 
 	// Resources
-	resource(publicRoutes, "/static_translations", controllers.StaticTranslationsController{}, []int{ACTION_INDEX})
+	resource(apiRoutes, "/static_translations", controllers.StaticTranslationsController{}, []int{ACTION_INDEX})
 
 	e.Logger.Fatal(e.Start(":1323"))
 }

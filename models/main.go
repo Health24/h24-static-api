@@ -25,11 +25,11 @@ type Base struct {
 
 func init() {
 
-	fmt.Println(config.DATABASE_URL)
+	// fmt.Println(config.DATABASE_URL)
 
 	var err error
 
-	DB, err = gorm.Open("postgres", "user=health24 dbname=health24_production")
+	DB, err = gorm.Open("postgres", "host=/var/run/postgresql user=health24 dbname=health24_production sslmode=disable")
 
 	if err != nil {
 
