@@ -3,7 +3,7 @@ package models
 import (
 	"fmt"
 	"github.com/jinzhu/gorm"
-	"github.com/vshaveyko/h24-static-api/config"
+	// "github.com/vshaveyko/h24-static-api/config"
 	"time"
 )
 
