@@ -29,7 +29,7 @@ func init() {
 
 	var err error
 
-	DB, err = gorm.Open("postgres", config.DATABASE_URL)
+	DB, err = gorm.Open("postgres", "user=health24 dbname=health24_production")
 
 	if err != nil {
 
