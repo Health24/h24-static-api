@@ -12,15 +12,34 @@ import (
 type StaticTranslationsController struct {
 }
 
-func (u StaticTranslationsController) Index(c echo.Context) interface{} {
+func allLocalesResult() map[string]map[string]string {
+
+	result := map[string]map[string]string{}
+
+	var static_translations []models.StaticTranslation
+
+	models.DB.Preload("Translations").Find(&static_translations)
+
+	for _, tl := range static_translations {
+
+		for _, locale_tl := range tl.Translations {
+			if _, ok := result[locale_tl.Locale]; !ok {
+				result[locale_tl.Locale] = map[string]string{}
+			}
+
+			result[locale_tl.Locale][tl.TextAlias] = locale_tl.StaticTranslation
+
+		}
+
+	}
+
+	return result
+
+}
+
+func localeResult(locale string) map[string]string {
 
 	result := make(map[string]string)
-
-	locale := c.QueryParam("lang")
-
-	if locale == "" {
-		locale = "ru"
-	}
 
 	var static_translations []models.StaticTranslation
 
@@ -36,6 +55,18 @@ func (u StaticTranslationsController) Index(c echo.Context) interface{} {
 	}
 
 	return result
+
+}
+
+func (u StaticTranslationsController) Index(c echo.Context) interface{} {
+
+	locale := c.QueryParam("lang")
+
+	if locale == "" {
+		return allLocalesResult()
+	} else {
+		return localeResult(locale)
+	}
 
 }
 

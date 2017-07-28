@@ -3,7 +3,7 @@ package models
 import (
 	"fmt"
 	"github.com/jinzhu/gorm"
-	// "github.com/vshaveyko/h24-static-api/config"
+	"github.com/vshaveyko/h24-static-api/config"
 	"time"
 )
 
@@ -29,7 +29,11 @@ func init() {
 
 	var err error
 
-	DB, err = gorm.Open("postgres", "host=/var/run/postgresql user=health24 dbname=health24_production sslmode=disable")
+	if config.EnvProduction() {
+		DB, err = gorm.Open("postgres", "host=/var/run/postgresql user=health24 dbname=health24_production sslmode=disable")
+	} else {
+		DB, err = gorm.Open("postgres", config.DATABASE_URL)
+	}
 
 	if err != nil {
 
