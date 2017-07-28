@@ -18,7 +18,7 @@ func allLocalesResult() map[string]map[string]string {
 
 	var static_translations []models.StaticTranslation
 
-	models.DB.Preload("Translations").Find(&static_translations)
+	models.DB.Preload("Translations").Where("text_alias != ''").Find(&static_translations)
 
 	for _, tl := range static_translations {
 
@@ -47,7 +47,7 @@ func localeResult(locale string) map[string]string {
 			INNER JOIN static_translation_translations
 			   ON static_translation_translations.static_translation_id = static_translations.id
 				AND static_translation_translations.locale = ?
-		`, locale).Select("DISTINCT ON (text_alias) text_alias, static_translation_translations.static_translation as static_translation").Find(&static_translations)
+		`, locale).Select("DISTINCT ON (text_alias) text_alias, static_translation_translations.static_translation as static_translation").Where("text_alias != ''").Find(&static_translations)
 
 	for _, tl := range static_translations {
 		fmt.Print("Alias", tl.TextAlias, "TRANSLATION", tl.StaticTranslation, "\n")
