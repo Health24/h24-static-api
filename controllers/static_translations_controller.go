@@ -3,7 +3,7 @@ package controllers
 import (
 	// "github.com/labstack/echo"
 	"errors"
-	"fmt"
+	// "fmt"
 	"github.com/labstack/echo"
 	"github.com/vshaveyko/h24-static-api/models"
 	// "json"
@@ -50,7 +50,6 @@ func localeResult(locale string) map[string]string {
 		`, locale).Select("DISTINCT ON (text_alias) text_alias, static_translation_translations.static_translation as static_translation").Where("text_alias != ''").Find(&static_translations)
 
 	for _, tl := range static_translations {
-		fmt.Print("Alias", tl.TextAlias, "TRANSLATION", tl.StaticTranslation, "\n")
 		result[tl.TextAlias] = tl.StaticTranslation
 	}
 
